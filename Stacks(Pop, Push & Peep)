@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Stack {
+    private ArrayList<Integer> stackList = new ArrayList<>();
+    private int tos = -1;
+
+    public void push(int data) {
+        tos++;
+        stackList.add(data);
+        System.out.println("Pushed: " + data);
+    }
+
+    public void pop() {
+        if (tos == -1) {
+            System.out.println("Stack is empty. Cannot pop.");
+        } else {
+            int val = stackList.remove(tos);
+            System.out.println("Popped: " + val);
+            tos--;
+        }
+    }
+
+    public void peep() {
+        if (tos == -1) {
+            System.out.println("Stack is empty. Nothing to peep.");
+        } else {
+            System.out.println("Top element: " + stackList.get(tos));
+        }
+    }
+
+    public void displayStack() {
+        if(tos == -1) {
+            System.out.println("Stack is empty.");
+        } else {
+            System.out.print("Stack contents (bottom to top): ");
+            for (int i = 0; i <= tos; i++) {
+                System.out.print(stackList.get(i) + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+class Push {
+    public void performPush(Stack stack, int data) {
+        stack.push(data);
+    }
+}
+
+class Pop {
+    public void performPop(Stack stack) {
+        stack.pop();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Stack stack = new Stack();
+        Push pushObj = new Push();
+        Pop popObj = new Pop();
+        int choice;
+
+        do {
+            System.out.println("\n1. Push\n2. Pop\n3. Peep\n4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to push: ");
+                    int val = sc.nextInt();
+                    pushObj.performPush(stack, val);
+                    break;
+                case 2:
+                    popObj.performPop(stack);
+                    break;
+                case 3:
+                    stack.peep();
+                    break;
+                case 4:
+                    System.out.println("Exiting.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } while (choice != 4);
+
+        System.out.println("\nFinal stack:");
+        stack.displayStack();
+        sc.close();
+    }
+}
